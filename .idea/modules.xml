@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ru.geekbrains.Java2_JavaFX.iml" filepath="$PROJECT_DIR$/ru.geekbrains.Java2_JavaFX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ru.geekbrains.java2.iml" filepath="$PROJECT_DIR$/ru.geekbrains.java2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ru.geekbrains.java2.network.client/ru.geekbrains.java2.network.client.iml" filepath="$PROJECT_DIR$/ru.geekbrains.java2.network.client/ru.geekbrains.java2.network.client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ru.geekbrains.java2.network.server/ru.geekbrains.java2.network.server.iml" filepath="$PROJECT_DIR$/ru.geekbrains.java2.network.server/ru.geekbrains.java2.network.server.iml" />
     </modules>
   </component>
 </project>
