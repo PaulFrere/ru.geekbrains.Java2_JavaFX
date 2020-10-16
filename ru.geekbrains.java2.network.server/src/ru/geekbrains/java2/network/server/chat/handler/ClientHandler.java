@@ -12,6 +12,10 @@ public class ClientHandler {
     private static final String AUTH_CMD_PREFIX = "/auth";
     private static final String AUTHOK_CMD_PREFIX = "/authok";
     private static final String AUTHERR_CMD_PREFIX = "/autherr";
+    private static final String PRIVATE_MSG_CMD_PREFIX = "/w";
+    private static final String CLIENT_MSG_CMD_PREFIX = "/clientMsg";
+    private static final String SERVER_MSG_CMD_PREFIX = "/serverMsg";
+    private static final String END_CMD = "/end";
 
     private final MyServer myServer;
     private final Socket clientSocket;
@@ -24,6 +28,7 @@ public class ClientHandler {
     public ClientHandler(MyServer myServer, Socket clientSocket) {
         this.myServer = myServer;
         this.clientSocket = clientSocket;
+
     }
 
     public void handle() throws IOException {
@@ -31,6 +36,7 @@ public class ClientHandler {
         out = new DataOutputStream(clientSocket.getOutputStream());
 
         new Thread(() -> {
+
             try {
                 authentication();
                 readMessages();
@@ -54,20 +60,20 @@ public class ClientHandler {
         while (true) {
             String message = in.readUTF();
             System.out.println("message from " + username + ": " + message);
-            if (message.startsWith("/end")) {
+            if (message.startsWith(END_CMD)) {
                 return;
             }
-            myServer.broadcastMessage(message, this);
-            if (message.startsWith("/w")){
-                String[] words = message.split(" ");
-                String usernameoftheReciever = words[1];
-                String msg = message.substring(3);
-                myServer.privateMsg(username + ": " + msg, usernameoftheReciever);
-            } else {
-                MyServer.broadcastMsg(username + ": " + message);}
+            else if (message.startsWith(PRIVATE_MSG_CMD_PREFIX)) {
+                String[] parts = message.split("\\s+", 3);
+                String recipient = parts[1];
+                String privateMessage = parts[2];
+                myServer.sendPrivateMessage(this, recipient, privateMessage);
+            }
+            else {
+                myServer.broadcastMessage(message, this, false);
+            }
         }
-        }
-
+    }
 
     private void authentication() throws IOException {
         while (true) {
@@ -80,13 +86,16 @@ public class ClientHandler {
                 if (username != null) {
                     if (myServer.isNicknameAlreadyBusy(username)) {
                         out.writeUTF(AUTHERR_CMD_PREFIX + " Login and password are already used!");
+                        continue;
                     }
                     out.writeUTF(AUTHOK_CMD_PREFIX + " " + username);
-                    myServer.broadcastMessage(username + " joined to chat!", this);
+                    myServer.broadcastMessage(username + " joined to chat!", this, true);
                     myServer.subscribe(this);
                     break;
                 } else {
                     out.writeUTF(AUTHERR_CMD_PREFIX + " Login and/or password are invalid! Please, try again");
+                    clientSocket.setSoTimeout(120000);
+                    clientSocket.close();
                 }
             } else {
                 out.writeUTF(AUTHERR_CMD_PREFIX + " /auth command is required!");
@@ -100,7 +109,12 @@ public class ClientHandler {
     }
 
 
-    public void sendMessage(String message) throws IOException {
-        out.writeUTF(message);
+    public void sendMessage(String sender, String message) throws IOException {
+        if (sender == null) {
+            out.writeUTF(String.format("%s %s", SERVER_MSG_CMD_PREFIX, message));
+        }
+        else {
+            out.writeUTF(String.format("%s %s %s", CLIENT_MSG_CMD_PREFIX, sender, message));
+        }
     }
 }
