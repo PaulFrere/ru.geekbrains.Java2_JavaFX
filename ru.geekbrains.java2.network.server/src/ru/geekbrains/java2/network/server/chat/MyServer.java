@@ -8,26 +8,18 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MyServer {
 
-    private static ClientHandler[] client;
     private final ServerSocket serverSocket;
     private final List<ClientHandler> clients = new ArrayList<>();
-    //    private final List<ClientHandler> clients = new CopyOnWriteArrayList<>();
-//    private final List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
     private final AuthService authService;
 
 
     public MyServer(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
         this.authService = new BaseAuthService();
-    }
-
-    public static void broadcastMsg(String s) {
     }
 
     public void start() throws IOException {
@@ -63,12 +55,13 @@ public class MyServer {
         return authService;
     }
 
-    public synchronized void broadcastMessage(String message, ClientHandler sender) throws IOException {
+    public synchronized void broadcastMessage(String message, ClientHandler sender, boolean isServerInfoMsg) throws IOException {
         for (ClientHandler client : clients) {
             if (client == sender) {
                 continue;
             }
-            client.sendMessage(message);
+
+            client.sendMessage(isServerInfoMsg ? null : sender.getUsername(), message);
         }
     }
 
@@ -88,16 +81,12 @@ public class MyServer {
         }
         return false;
     }
-    public static void privateMsg(String message, String username) {
-        for (ClientHandler o : client) {
-            if (o.getUsername().equalsIgnoreCase(username)) {
-                try {
-                    o.sendMessage(message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+    public synchronized void sendPrivateMessage(ClientHandler sender, String recipient, String privateMessage) throws IOException {
+        for (ClientHandler client : clients) {
+            if (client.getUsername().equals(recipient)) {
+                client.sendMessage(sender.getUsername(), privateMessage);
             }
         }
     }
-
 }

@@ -1,8 +1,11 @@
+package ru.geekbrains.java2.network.server;
+
 import ru.geekbrains.java2.network.server.chat.MyServer;
 
 import java.io.IOException;
 
 public class ServerApp {
+
     private static final int DEFAULT_PORT = 8189;
 
     public static void main(String[] args) {
@@ -18,4 +21,5 @@ public class ServerApp {
             System.exit(1);
         }
     }
+
 }

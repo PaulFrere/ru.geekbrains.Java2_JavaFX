@@ -17,7 +17,7 @@ public class AuthDialogController {
     private NetworkChatClient clientApp;
 
     @FXML
-    public void executeAuth(ActionEvent actionEvent) {
+    public void executeAuth(ActionEvent actionEvent) throws InterruptedException {
         String login = loginField.getText();
         String password = passwordField.getText();
         if (login == null || login.isBlank() || password == null || password.isBlank()) {
@@ -31,8 +31,6 @@ public class AuthDialogController {
         } else {
             NetworkChatClient.showNetworkError(authError, "Auth error");
         }
-
-
     }
 
     public void setNetwork(Network network) {

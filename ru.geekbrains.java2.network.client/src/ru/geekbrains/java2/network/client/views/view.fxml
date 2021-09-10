@@ -2,28 +2,35 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
+
 <AnchorPane prefHeight="400.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.java2.network.client.controllers.ViewController">
     <children>
-        <SplitPane dividerPositions="0.005016722408026756, 0.2842809364548495" prefHeight="400.0" prefWidth="600.0">
+        <SplitPane dividerPositions="0.3" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-                <ListView fx:id="usersList" />
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <ListView fx:id="usersList" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
                         <SplitPane dividerPositions="0.8838383838383839" orientation="VERTICAL" prefHeight="398.0" prefWidth="486.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="352.0" prefWidth="484.0">
+                                <VBox prefHeight="200.0" prefWidth="100.0">
                                     <children>
-                                        <TextArea fx:id="chatHistory" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
-                                        <Label layoutX="190.0" layoutY="8.0" prefHeight="42.0" prefWidth="33.0" text="Чат" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="8.0">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </Label>
+                                        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="30.0" prefWidth="200.0">
+                                            <children>
+                                                <Label prefHeight="42.0" text="Чат">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </HBox>
+                                        <TextArea fx:id="chatHistory" editable="false" maxHeight="1.7976931348623157E308" prefWidth="200.0" wrapText="true" VBox.vgrow="ALWAYS" />
                                     </children>
-                                </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                </VBox>
+                                <AnchorPane maxHeight="50.0" minHeight="30.0" minWidth="0.0" prefWidth="160.0">
                                     <children>
                                         <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
