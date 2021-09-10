@@ -1,8 +1,15 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="center" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <TextArea fx:id="textArea" editable="false" nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="ALWAYS" />
+
+    <HBox>
+        <TextField fx:id="textField" onAction="#sendMassage" promptText="Print your massage" HBox.hgrow="ALWAYS" />
+        <Button onAction="#sendMassage" text="Send massage" />
+
+    </HBox>
+
+</VBox>
